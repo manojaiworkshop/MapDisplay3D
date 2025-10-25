@@ -1,0 +1,50 @@
+{
+  "assetManifest": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-10-21T00:00:00Z",
+    "airports": [
+      {
+        "id": "DEL",
+        "name": "Indira Gandhi International Airport",
+        "file": "airports/delhi_airport.geojson",
+        "enabled": true
+      },
+      {
+        "id": "BOM",
+        "name": "Chhatrapati Shivaji Maharaj International Airport",
+        "file": "airports/mumbai_airport.geojson",
+        "enabled": true
+      }
+    ],
+    "routes": [
+      {
+        "id": "flight_routes",
+        "name": "All Flight Routes",
+        "file": "routes/flight_routes.json",
+        "enabled": true
+      }
+    ],
+    "config": [
+      {
+        "id": "aircraft_config",
+        "name": "Aircraft Configuration",
+        "file": "config/aircraft_config.json",
+        "enabled": true
+      }
+    ]
+  },
+  "loading": {
+    "basePath": "/asset_rendering/",
+    "timeout": 10000,
+    "retryAttempts": 3
+  },
+  "features": {
+    "airportBoundaries": true,
+    "atcTowers": true,
+    "runways": true,
+    "terminals": true,
+    "flightSimulation": true,
+    "flightTrails": true,
+    "flightLabels": true
+  }
+}

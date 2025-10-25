@@ -1,0 +1,64 @@
+{
+  "aircraft_models": [
+    {
+      "type": "boeing_737",
+      "name": "Boeing 737-800",
+      "dimensions": {
+        "length": 39.5,
+        "wingspan": 35.8,
+        "height": 12.5
+      },
+      "performance": {
+        "maxSpeed": 544,
+        "cruiseSpeed": 470,
+        "maxAltitude": 12500,
+        "range": 5665
+      },
+      "visual": {
+        "scale": 0.8,
+        "color": "#FFFFFF",
+        "showWinglets": true,
+        "engineCount": 2
+      }
+    },
+    {
+      "type": "airbus_a320",
+      "name": "Airbus A320",
+      "dimensions": {
+        "length": 37.6,
+        "wingspan": 35.8,
+        "height": 11.8
+      },
+      "performance": {
+        "maxSpeed": 537,
+        "cruiseSpeed": 460,
+        "maxAltitude": 12000,
+        "range": 6100
+      },
+      "visual": {
+        "scale": 0.75,
+        "color": "#FFFFFF",
+        "showWinglets": true,
+        "engineCount": 2
+      }
+    }
+  ],
+  "rendering": {
+    "showTrails": true,
+    "trailLength": 50,
+    "showLabels": true,
+    "labelDistance": 100,
+    "showAltitude": true,
+    "showSpeed": true,
+    "updateInterval": 16
+  },
+  "simulation": {
+    "physics": {
+      "gravity": 9.81,
+      "airDensity": 1.225,
+      "windEnabled": false
+    },
+    "interpolation": "catmullrom",
+    "smoothness": 0.5
+  }
+}

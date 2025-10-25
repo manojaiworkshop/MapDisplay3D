@@ -1,0 +1,202 @@
+{
+  "routes": [
+    {
+      "id": "DEL-BOM-001",
+      "name": "Delhi to Mumbai Morning Flight",
+      "aircraft": {
+        "type": "boeing_737",
+        "registration": "VT-DEL",
+        "airline": "Air India",
+        "color": "#FF0000"
+      },
+      "departure": {
+        "airport": "DEL",
+        "runway": "10/28",
+        "stand": "A3",
+        "time": "06:00"
+      },
+      "arrival": {
+        "airport": "BOM",
+        "runway": "09/27",
+        "stand": "B2",
+        "time": "08:15"
+      },
+      "waypoints": [
+        {
+          "name": "TAKEOFF",
+          "lat": 28.5525,
+          "lon": 77.0925,
+          "altitude": 0,
+          "speed": 0,
+          "action": "takeoff"
+        },
+        {
+          "name": "CLIMB",
+          "lat": 28.5400,
+          "lon": 77.1000,
+          "altitude": 1000,
+          "speed": 250,
+          "action": "climb"
+        },
+        {
+          "name": "CRUISE_START",
+          "lat": 28.4000,
+          "lon": 77.2000,
+          "altitude": 11000,
+          "speed": 450,
+          "action": "cruise"
+        },
+        {
+          "name": "CRUISE_MID",
+          "lat": 24.0000,
+          "lon": 75.0000,
+          "altitude": 11000,
+          "speed": 480,
+          "action": "cruise"
+        },
+        {
+          "name": "CRUISE_END",
+          "lat": 20.0000,
+          "lon": 73.5000,
+          "altitude": 11000,
+          "speed": 450,
+          "action": "cruise"
+        },
+        {
+          "name": "DESCENT",
+          "lat": 19.2000,
+          "lon": 72.9500,
+          "altitude": 3000,
+          "speed": 280,
+          "action": "descend"
+        },
+        {
+          "name": "APPROACH",
+          "lat": 19.1000,
+          "lon": 72.8800,
+          "altitude": 500,
+          "speed": 180,
+          "action": "approach"
+        },
+        {
+          "name": "LANDING",
+          "lat": 19.0875,
+          "lon": 72.8700,
+          "altitude": 0,
+          "speed": 140,
+          "action": "landing"
+        }
+      ],
+      "simulation": {
+        "enabled": true,
+        "loop": true,
+        "speedMultiplier": 100,
+        "startDelay": 0
+      }
+    },
+    {
+      "id": "BOM-DEL-002",
+      "name": "Mumbai to Delhi Evening Flight",
+      "aircraft": {
+        "type": "airbus_a320",
+        "registration": "VT-BOM",
+        "airline": "IndiGo",
+        "color": "#0033CC"
+      },
+      "departure": {
+        "airport": "BOM",
+        "runway": "09/27",
+        "stand": "B4",
+        "time": "18:00"
+      },
+      "arrival": {
+        "airport": "DEL",
+        "runway": "11/29",
+        "stand": "A5",
+        "time": "20:30"
+      },
+      "waypoints": [
+        {
+          "name": "TAKEOFF",
+          "lat": 19.0875,
+          "lon": 72.8700,
+          "altitude": 0,
+          "speed": 0,
+          "action": "takeoff"
+        },
+        {
+          "name": "CLIMB",
+          "lat": 19.1000,
+          "lon": 72.8800,
+          "altitude": 1200,
+          "speed": 240,
+          "action": "climb"
+        },
+        {
+          "name": "CRUISE_START",
+          "lat": 19.5000,
+          "lon": 73.5000,
+          "altitude": 10500,
+          "speed": 460,
+          "action": "cruise"
+        },
+        {
+          "name": "CRUISE_MID",
+          "lat": 23.5000,
+          "lon": 75.0000,
+          "altitude": 10500,
+          "speed": 470,
+          "action": "cruise"
+        },
+        {
+          "name": "CRUISE_END",
+          "lat": 27.5000,
+          "lon": 76.5000,
+          "altitude": 10500,
+          "speed": 450,
+          "action": "cruise"
+        },
+        {
+          "name": "DESCENT",
+          "lat": 28.4000,
+          "lon": 77.0000,
+          "altitude": 2500,
+          "speed": 260,
+          "action": "descend"
+        },
+        {
+          "name": "APPROACH",
+          "lat": 28.5300,
+          "lon": 77.0700,
+          "altitude": 600,
+          "speed": 170,
+          "action": "approach"
+        },
+        {
+          "name": "LANDING",
+          "lat": 28.5525,
+          "lon": 77.0925,
+          "altitude": 0,
+          "speed": 150,
+          "action": "landing"
+        }
+      ],
+      "simulation": {
+        "enabled": true,
+        "loop": true,
+        "speedMultiplier": 100,
+        "startDelay": 5000
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "updated": "2025-10-21",
+    "units": {
+      "altitude": "meters",
+      "speed": "knots",
+      "distance": "kilometers"
+    },
+    "notes": "Altitude is in meters above sea level. Speed is in knots (nautical miles per hour)."
+  }
+}

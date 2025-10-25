@@ -1,0 +1,131 @@
+{
+  "type": "RailwayLODDatabase",
+  "metadata": {
+    "version": "2.0",
+    "total_zones": 5,
+    "country": "India",
+    "lod_levels": {
+      "level_0": "Headquarters only",
+      "level_1": "Major stations",
+      "level_2": "Regional stations",
+      "level_3": "All stations"
+    },
+    "last_updated": "2025-10-19"
+  },
+  "zones": [
+    {
+      "id": "NR",
+      "name": "Northern Railway",
+      "headquarters": {
+        "name": "New Delhi",
+        "code": "NDLS",
+        "lat": 28.6415,
+        "lon": 77.2219,
+        "category": "A1",
+        "importance": 100
+      },
+      "bounds": {"minLat": 26.0, "maxLat": 34.0, "minLon": 73.0, "maxLon": 81.0},
+      "color": "#FF6B6B",
+      "stations_level_1": [
+        {"name": "Lucknow", "code": "LKO", "lat": 26.8393, "lon": 80.9231, "category": "A1", "importance": 88},
+        {"name": "Amritsar", "code": "ASR", "lat": 31.6340, "lon": 74.8723, "category": "A", "importance": 80}
+      ],
+      "stations_level_2": [
+        {"name": "Ghaziabad", "code": "GZB", "lat": 28.6676, "lon": 77.4498, "category": "A", "importance": 65},
+        {"name": "Moradabad", "code": "MB", "lat": 28.8386, "lon": 78.7733, "category": "A", "importance": 60}
+      ],
+      "stations_level_3": [
+        {"name": "Firozpur Cantt", "code": "FZR", "lat": 30.9257, "lon": 74.6142, "category": "A", "importance": 45}
+      ],
+      "tracks": [{"from": "NDLS", "to": "LKO", "type": "main"}]
+    },
+    {
+      "id": "ER",
+      "name": "Eastern Railway",
+      "headquarters": {
+        "name": "Howrah",
+        "code": "HWH",
+        "lat": 22.5826,
+        "lon": 88.3426,
+        "category": "A1",
+        "importance": 100
+      },
+      "bounds": {"minLat": 21.5, "maxLat": 27.0, "minLon": 86.0, "maxLon": 89.0},
+      "color": "#95E1D3",
+      "stations_level_1": [
+        {"name": "Sealdah", "code": "SDAH", "lat": 22.5697, "lon": 88.3697, "category": "A1", "importance": 95},
+        {"name": "Asansol", "code": "ASN", "lat": 23.6890, "lon": 86.9663, "category": "A", "importance": 75}
+      ],
+      "stations_level_2": [
+        {"name": "Durgapur", "code": "DGR", "lat": 23.5204, "lon": 87.3080, "category": "A", "importance": 65}
+      ],
+      "stations_level_3": [],
+      "tracks": [{"from": "HWH", "to": "SDAH", "type": "main"}]
+    },
+    {
+      "id": "WR",
+      "name": "Western Railway",
+      "headquarters": {
+        "name": "Mumbai Central",
+        "code": "BCT",
+        "lat": 18.9685,
+        "lon": 72.8195,
+        "category": "A1",
+        "importance": 100
+      },
+      "bounds": {"minLat": 18.5, "maxLat": 24.0, "minLon": 69.5, "maxLon": 76.0},
+      "color": "#FEA47F",
+      "stations_level_1": [
+        {"name": "Ahmedabad", "code": "ADI", "lat": 23.0225, "lon": 72.5714, "category": "A1", "importance": 92},
+        {"name": "Surat", "code": "ST", "lat": 21.1959, "lon": 72.8302, "category": "A", "importance": 82}
+      ],
+      "stations_level_2": [
+        {"name": "Rajkot", "code": "RJT", "lat": 22.2971, "lon": 70.7783, "category": "A", "importance": 65}
+      ],
+      "stations_level_3": [],
+      "tracks": [{"from": "BCT", "to": "ADI", "type": "main"}]
+    },
+    {
+      "id": "SR",
+      "name": "Southern Railway",
+      "headquarters": {
+        "name": "Chennai Central",
+        "code": "MAS",
+        "lat": 13.0827,
+        "lon": 80.2707,
+        "category": "A1",
+        "importance": 100
+      },
+      "bounds": {"minLat": 8.0, "maxLat": 14.0, "minLon": 76.5, "maxLon": 81.0},
+      "color": "#EAB543",
+      "stations_level_1": [
+        {"name": "Coimbatore", "code": "CBE", "lat": 11.0168, "lon": 76.9558, "category": "A", "importance": 82},
+        {"name": "Madurai", "code": "MDU", "lat": 9.9252, "lon": 78.1198, "category": "A", "importance": 80}
+      ],
+      "stations_level_2": [],
+      "stations_level_3": [],
+      "tracks": [{"from": "MAS", "to": "CBE", "type": "main"}]
+    },
+    {
+      "id": "CR",
+      "name": "Central Railway",
+      "headquarters": {
+        "name": "CST Mumbai",
+        "code": "CSMT",
+        "lat": 18.9398,
+        "lon": 72.8355,
+        "category": "A1",
+        "importance": 100
+      },
+      "bounds": {"minLat": 17.0, "maxLat": 22.0, "minLon": 72.5, "maxLon": 80.0},
+      "color": "#25CCF7",
+      "stations_level_1": [
+        {"name": "Pune", "code": "PUNE", "lat": 18.5284, "lon": 73.8740, "category": "A1", "importance": 90},
+        {"name": "Nagpur", "code": "NGP", "lat": 21.1458, "lon": 79.0882, "category": "A1", "importance": 88}
+      ],
+      "stations_level_2": [],
+      "stations_level_3": [],
+      "tracks": [{"from": "CSMT", "to": "PUNE", "type": "main"}]
+    }
+  ]
+}

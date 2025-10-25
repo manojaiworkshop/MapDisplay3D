@@ -1,0 +1,172 @@
+# Root .gitignore for MapDisplay3D Project
+
+# ============================================
+# Qt Project Files
+# ============================================
+# Qt build outputs
+build/
+*.o
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+
+# Qt Creator files
+*.pro.user
+*.pro.user.*
+.qmake.stash
+
+# Qt MOC files
+moc_predefs.h
+
+# Compiled executables
+sample
+*.exe
+*.app
+
+# ============================================
+# Python Virtual Environments
+# ============================================
+mapenv/
+venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ============================================
+# Node.js / Frontend
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Frontend build outputs
+webapp/frontend/dist/
+webapp/frontend/build/
+webapp/frontend/.vite/
+webapp/frontend/src_backup/
+
+# ============================================
+# Build Artifacts
+# ============================================
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.out
+Makefile
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+*.cmake
+
+# ============================================
+# Editor / IDE
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.code-workspace
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+*.log.*
+
+# ============================================
+# Temporary files
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*_backup.json
+*_backup/
+temp/
+tmp/
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# Environment & Configuration
+# ============================================
+.env
+.env.local
+.env.*.local
+*.env
+
+# ============================================
+# Data files (optional - uncomment if needed)
+# ============================================
+# Uncomment these if you don't want to commit data files
+# *.json
+# *.geojson
+# !package.json
+# !webapp/backend/config.yaml
+
+# Keep specific data files
+!fullstations.json
+!states.geojson
+!stations.geojson
+!india_boundary.geojson
+!india_boundary_detailed.geojson
+
+# ============================================
+# Documentation (keep all markdown)
+# ============================================
+# Don't ignore any .md files
+
+# ============================================
+# Leaflet library (keep)
+# ============================================
+# Don't ignore leaflet/ directory
+
+# ============================================
+# Python scripts
+# ============================================
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ============================================
+# Test files
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+.jest-cache/

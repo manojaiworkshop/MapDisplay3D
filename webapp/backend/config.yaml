@@ -1,0 +1,98 @@
+openai:
+  api_key: "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"
+  model: gpt-4o-mini-2024-07-18
+  temperature: 1.0
+  max_tokens: 2048
+  top_p: 1.0
+
+# Define available actions that the map UI can perform
+# These actions are referenced by the NLP interpreter and must be implemented in the frontend
+actions:
+  # Zoom actions
+  zoom:
+    type: "zoom"
+    modes:
+      - "to"  # Zoom to specific level (e.g., "zoom to 10x")
+      - "by"  # Zoom by factor (e.g., "zoom in by 2x")
+    parameters:
+      - "value"  # Zoom level or factor (number)
+      - "mode"   # 'to' or 'by'
+    examples:
+      - "zoom to 10x"
+      - "zoom in by 2x"
+      - "zoom out by 0.5x"
+  
+  # Center map on coordinates
+  center:
+    type: "center"
+    parameters:
+      - "lat"  # Latitude (number)
+      - "lon"  # Longitude (number)
+    examples:
+      - "center 28.64, 77.22"
+      - "center on coordinates 19.0760, 72.8777"
+  
+  # Pan to coordinates (alias for center)
+  pan:
+    type: "pan"
+    parameters:
+      - "lat"  # Latitude (number)
+      - "lon"  # Longitude (number)
+    examples:
+      - "pan to 28.64, 77.22"
+  
+  # Go to station by name (automatically zooms to 400km radius)
+  goto_station:
+    type: "goto_station"
+    parameters:
+      - "name"  # Station name (string)
+    examples:
+      - "goto station Mumbai"
+      - "go to New Delhi station"
+      - "show me Chennai Central"
+  
+  # Zoom out to show full India map
+  zoom_out:
+    type: "zoom_out"
+    parameters: []
+    examples:
+      - "zoom out"
+      - "show full map"
+      - "zoom out to India"
+  
+  # Reset view to default (alias for zoom_out)
+  reset:
+    type: "reset"
+    parameters: []
+    examples:
+      - "reset view"
+      - "reset map"
+  
+  # Start trip animation from source to destination
+  start_trip:
+    type: "start_trip"
+    parameters:
+      - "source"       # Source station name (string)
+      - "destination"  # Destination station name (string)
+      - "speed"        # Optional speed (number, default: 3.0)
+    examples:
+      - "start trip from NDLS to Howrah"
+      - "start trip from Mumbai to Delhi"
+      - "trip from Chennai to Kolkata"
+      - "start journey from Bangalore to Hyderabad"
+  
+  # Get complete location details with pagination
+  location_details:
+    type: "location_details"
+    parameters:
+      - "location"     # Location name (string)
+      - "page"         # Optional page number (number, default: 1)
+      - "page_size"    # Optional items per page (number, default: 50)
+      - "altitude"     # Optional altitude in km for zoom (number, default: 17000)
+    examples:
+      - "show me complete details of Delhi"
+      - "get location information for Mumbai"
+      - "show all details about Bangalore"
+      - "what are the details of Chennai"
+      - "give me information about Hyderabad"
+

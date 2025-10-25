@@ -1,0 +1,255 @@
+{
+  "type": "FeatureCollection",
+  "name": "Indian Cities",
+  "metadata": {
+    "total_cities": 50,
+    "render_zoom_levels": {
+      "tier_1_cities": [5, 35],
+      "tier_2_cities": [2, 20],
+      "tier_3_cities": [1, 10],
+      "towns": [0.5, 5]
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mumbai",
+        "state": "Maharashtra",
+        "tier": 1,
+        "population": 20411274,
+        "area_km2": 603.4,
+        "importance": 10,
+        "render_at_zoom": [5, 35],
+        "icon": "🏙️",
+        "color": "#ff6b35",
+        "size": 10,
+        "type": "metropolitan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8777, 19.0760]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Delhi",
+        "state": "Delhi",
+        "tier": 1,
+        "population": 32941000,
+        "area_km2": 1484,
+        "importance": 10,
+        "render_at_zoom": [5, 35],
+        "icon": "🏛️",
+        "color": "#ff0000",
+        "size": 10,
+        "type": "capital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2090, 28.6139]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bangalore",
+        "state": "Karnataka",
+        "tier": 1,
+        "population": 13193000,
+        "area_km2": 709,
+        "importance": 9,
+        "render_at_zoom": [5, 35],
+        "icon": "💻",
+        "color": "#4a90e2",
+        "size": 9,
+        "type": "tech_hub"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.5946, 12.9716]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hyderabad",
+        "state": "Telangana",
+        "tier": 1,
+        "population": 10494000,
+        "area_km2": 650,
+        "importance": 8,
+        "render_at_zoom": [5, 35],
+        "icon": "🏰",
+        "color": "#9b59b6",
+        "size": 8,
+        "type": "tech_hub"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.4867, 17.3850]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chennai",
+        "state": "Tamil Nadu",
+        "tier": 1,
+        "population": 11503000,
+        "area_km2": 426,
+        "importance": 8,
+        "render_at_zoom": [5, 35],
+        "icon": "🏭",
+        "color": "#e74c3c",
+        "size": 8,
+        "type": "industrial"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.2707, 13.0827]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kolkata",
+        "state": "West Bengal",
+        "tier": 1,
+        "population": 15134000,
+        "area_km2": 205,
+        "importance": 8,
+        "render_at_zoom": [5, 35],
+        "icon": "📚",
+        "color": "#f39c12",
+        "size": 8,
+        "type": "cultural"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [88.3639, 22.5726]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pune",
+        "state": "Maharashtra",
+        "tier": 2,
+        "population": 7764000,
+        "area_km2": 331.26,
+        "importance": 7,
+        "render_at_zoom": [2, 20],
+        "icon": "🎓",
+        "color": "#16a085",
+        "size": 7,
+        "type": "educational"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.8567, 18.5204]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ahmedabad",
+        "state": "Gujarat",
+        "tier": 2,
+        "population": 8450000,
+        "area_km2": 505,
+        "importance": 7,
+        "render_at_zoom": [2, 20],
+        "icon": "🏭",
+        "color": "#d35400",
+        "size": 7,
+        "type": "commercial"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.5714, 23.0225]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jaipur",
+        "state": "Rajasthan",
+        "tier": 2,
+        "population": 3971000,
+        "area_km2": 467,
+        "importance": 6,
+        "render_at_zoom": [2, 20],
+        "icon": "🏰",
+        "color": "#e91e63",
+        "size": 6,
+        "type": "heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.7873, 26.9124]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lucknow",
+        "state": "Uttar Pradesh",
+        "tier": 2,
+        "population": 3382000,
+        "area_km2": 631,
+        "importance": 6,
+        "render_at_zoom": [2, 20],
+        "icon": "🏛️",
+        "color": "#8e44ad",
+        "size": 6,
+        "type": "administrative"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.9462, 26.8467]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kochi",
+        "state": "Kerala",
+        "tier": 3,
+        "population": 2119000,
+        "area_km2": 94.88,
+        "importance": 5,
+        "render_at_zoom": [1, 10],
+        "icon": "🚢",
+        "color": "#27ae60",
+        "size": 5,
+        "type": "port"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.2673, 9.9312]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Goa",
+        "state": "Goa",
+        "tier": 3,
+        "population": 1458000,
+        "area_km2": 3702,
+        "importance": 5,
+        "render_at_zoom": [1, 10],
+        "icon": "🏖️",
+        "color": "#f1c40f",
+        "size": 5,
+        "type": "tourist"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.1240, 15.2993]
+      }
+    }
+  ]
+}

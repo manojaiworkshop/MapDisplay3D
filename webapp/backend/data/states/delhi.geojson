@@ -1,0 +1,222 @@
+{
+  "type": "FeatureCollection",
+  "name": "Delhi State",
+  "metadata": {
+    "state_code": "DL",
+    "state_name": "Delhi",
+    "capital": "New Delhi",
+    "render_zoom_levels": {
+      "min_zoom": 2,
+      "max_zoom": 35,
+      "optimal_zoom": 5
+    },
+    "data_levels": {
+      "state_boundary": { "zoom_range": [10, 35] },
+      "districts": { "zoom_range": [2, 10] },
+      "cities": { "zoom_range": [0.5, 5] },
+      "landmarks": { "zoom_range": [0.1, 2] }
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Delhi",
+        "state_code": "DL",
+        "type": "state_boundary",
+        "area_km2": 1484,
+        "population": 32941000,
+        "render_at_zoom": [10, 35],
+        "color": "#ff6b35",
+        "border_width": 2
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [76.8389, 28.4068],
+          [77.3464, 28.4068],
+          [77.3464, 28.8839],
+          [76.8389, 28.8839],
+          [76.8389, 28.4068]
+        ]]
+      }
+    }
+  ],
+  "districts": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Central Delhi",
+        "district_code": "CD",
+        "type": "district_boundary",
+        "area_km2": 25,
+        "population": 582320,
+        "render_at_zoom": [2, 10],
+        "color": "#4a90e2",
+        "border_width": 1.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [77.1889, 28.6289],
+          [77.2464, 28.6289],
+          [77.2464, 28.6839],
+          [77.1889, 28.6839],
+          [77.1889, 28.6289]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Delhi",
+        "district_code": "ND",
+        "type": "district_boundary",
+        "area_km2": 42.7,
+        "population": 249998,
+        "render_at_zoom": [2, 10],
+        "color": "#4a90e2",
+        "border_width": 1.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [77.1789, 28.5968],
+          [77.2364, 28.5968],
+          [77.2364, 28.6439],
+          [77.1789, 28.6439],
+          [77.1789, 28.5968]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Delhi",
+        "district_code": "SD",
+        "type": "district_boundary",
+        "area_km2": 250,
+        "population": 2731929,
+        "render_at_zoom": [2, 10],
+        "color": "#4a90e2",
+        "border_width": 1.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [77.1489, 28.4968],
+          [77.2964, 28.4968],
+          [77.2964, 28.5939],
+          [77.1489, 28.5939],
+          [77.1489, 28.4968]
+        ]]
+      }
+    }
+  ],
+  "cities": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Delhi",
+        "type": "capital_city",
+        "population": 249998,
+        "importance": 10,
+        "render_at_zoom": [0.5, 5],
+        "icon": "🏛️",
+        "color": "#ff0000",
+        "size": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2090, 28.6139]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Delhi Cantonment",
+        "type": "cantonment",
+        "population": 110351,
+        "importance": 6,
+        "render_at_zoom": [1, 3],
+        "icon": "🏰",
+        "color": "#8b4513",
+        "size": 6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.1025, 28.5672]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dwarka",
+        "type": "sub_city",
+        "population": 1044000,
+        "importance": 7,
+        "render_at_zoom": [1, 4],
+        "icon": "🏘️",
+        "color": "#32cd32",
+        "size": 7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.0469, 28.5921]
+      }
+    }
+  ],
+  "landmarks": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Red Fort",
+        "type": "historical_monument",
+        "importance": 9,
+        "render_at_zoom": [0.1, 2],
+        "icon": "🏯",
+        "color": "#dc143c",
+        "size": 5,
+        "details": "UNESCO World Heritage Site"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2410, 28.6562]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "India Gate",
+        "type": "monument",
+        "importance": 8,
+        "render_at_zoom": [0.1, 2],
+        "icon": "🏛️",
+        "color": "#ffd700",
+        "size": 4,
+        "details": "War Memorial"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2295, 28.6129]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lotus Temple",
+        "type": "religious",
+        "importance": 7,
+        "render_at_zoom": [0.1, 1.5],
+        "icon": "🪷",
+        "color": "#ff69b4",
+        "size": 4,
+        "details": "Baháʼí House of Worship"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2588, 28.5535]
+      }
+    }
+  ]
+}

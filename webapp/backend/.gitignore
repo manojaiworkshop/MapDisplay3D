@@ -1,0 +1,71 @@
+# Backend .gitignore
+
+# Python
+venv/
+env/
+ENV/
+mapenv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv
+.pyenv
+.python-version
+
+# FastAPI / Uvicorn
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+.cache
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data files (uncomment if you don't want to commit data)
+# data/
+# *.json
+# *.geojson
+# !config.yaml
+
+# Keep configuration files
+!config.yaml
+!requirements.txt

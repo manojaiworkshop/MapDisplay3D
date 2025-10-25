@@ -1,0 +1,89 @@
+{
+  "type": "FeatureCollection",
+  "name": "Delhi Indira Gandhi International Airport",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Indira Gandhi International Airport",
+        "iata": "DEL",
+        "icao": "VIDP",
+        "city": "New Delhi",
+        "country": "India",
+        "elevation": 237,
+        "runways": [
+          {
+            "name": "10/28",
+            "length": 4430,
+            "width": 60,
+            "heading": 100
+          },
+          {
+            "name": "11/29", 
+            "length": 3810,
+            "width": 45,
+            "heading": 110
+          },
+          {
+            "name": "09/27",
+            "length": 2813,
+            "width": 45,
+            "heading": 90
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [77.0856, 28.5665],
+            [77.0950, 28.5665],
+            [77.1100, 28.5600],
+            [77.1100, 28.5450],
+            [77.0950, 28.5385],
+            [77.0856, 28.5385],
+            [77.0750, 28.5450],
+            [77.0750, 28.5600],
+            [77.0856, 28.5665]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "atc_tower",
+        "name": "DEL Tower",
+        "height": 83.8,
+        "frequency": "118.5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.0925, 28.5525, 83.8]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "terminal",
+        "name": "Terminal 3",
+        "capacity": 40000000
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.0880, 28.5490]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "parking_stand",
+        "stands": ["A1", "A2", "A3", "A4", "A5"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.0870, 28.5510]
+      }
+    }
+  ]
+}

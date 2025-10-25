@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wheel Event Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: monospace;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    #canvas {
+      width: 800px;
+      height: 600px;
+      background: #0f3460;
+      border: 3px solid #16213e;
+      cursor: crosshair;
+      display: block;
+      margin: 20px auto;
+    }
+    #log {
+      max-height: 400px;
+      overflow-y: auto;
+      background: #16213e;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .log-entry {
+      padding: 5px;
+      margin: 3px 0;
+      border-left: 3px solid #4ecca3;
+      padding-left: 10px;
+    }
+    .success { border-color: #4ecca3; color: #4ecca3; }
+    .warn { border-color: #ffa726; color: #ffa726; }
+    .error { border-color: #ef5350; color: #ef5350; }
+    h1 { text-align: center; color: #4ecca3; }
+    .instructions {
+      background: #16213e;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-left: 4px solid #4ecca3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🖱️ Mouse Wheel Event Test</h1>
+  
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ol>
+      <li>Move your mouse cursor over the BLUE CANVAS below</li>
+      <li>Scroll your mouse wheel UP and DOWN</li>
+      <li>Watch the logs appear below showing wheel events</li>
+      <li>If you see logs, wheel events ARE working</li>
+      <li>If you DON'T see logs, there's a browser/system issue</li>
+    </ol>
+  </div>
+  
+  <div id="canvas"></div>
+  
+  <div id="log">
+    <div class="log-entry success">🚀 Test page loaded - Hover over blue canvas and scroll wheel</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const logDiv = document.getElementById('log');
+    let eventCount = 0;
+    
+    function addLog(message, type = 'info') {
+      eventCount++;
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      const time = new Date().toLocaleTimeString();
+      entry.textContent = `[${time}] ${message}`;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+      
+      // Keep only last 50 entries
+      while (logDiv.children.length > 50) {
+        logDiv.removeChild(logDiv.firstChild);
+      }
+    }
+    
+    // Track mouse position
+    let mouseX = 0, mouseY = 0;
+    canvas.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (eventCount % 100 === 0) {
+        addLog(`Mouse at: (${x.toFixed(0)}, ${y.toFixed(0)})`, 'info');
+      }
+    });
+    
+    // Test wheel event - capture phase
+    canvas.addEventListener('wheel', (e) => {
+      addLog(`🔥 WHEEL (canvas capture): deltaY=${e.deltaY}, deltaX=${e.deltaX}, deltaMode=${e.deltaMode}`, 'success');
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false, capture: true });
+    
+    // Test wheel event - bubble phase
+    canvas.addEventListener('wheel', (e) => {
+      addLog(`🔥 WHEEL (canvas bubble): deltaY=${e.deltaY}`, 'warn');
+    }, { passive: false, capture: false });
+    
+    // Test wheel on window
+    window.addEventListener('wheel', (e) => {
+      if (e.target === canvas) {
+        addLog(`🔥 WHEEL (window): deltaY=${e.deltaY} - over canvas`, 'error');
+      }
+    }, { passive: false, capture: true });
+    
+    // Mouse enter/leave tracking
+    canvas.addEventListener('mouseenter', () => {
+      addLog('✅ Mouse ENTERED canvas - scroll wheel now!', 'success');
+    });
+    
+    canvas.addEventListener('mouseleave', () => {
+      addLog('⚠️ Mouse LEFT canvas', 'warn');
+    });
+    
+    addLog('✅ All event listeners attached!', 'success');
+    addLog('📍 Move mouse over blue canvas and scroll wheel', 'info');
+  </script>
+</body>
+</html>

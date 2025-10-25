@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "name": "Chhatrapati Shivaji Maharaj International Airport",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chhatrapati Shivaji Maharaj International Airport",
+        "iata": "BOM",
+        "icao": "VABB",
+        "city": "Mumbai",
+        "country": "India",
+        "elevation": 11,
+        "runways": [
+          {
+            "name": "09/27",
+            "length": 3445,
+            "width": 45,
+            "heading": 90
+          },
+          {
+            "name": "14/32",
+            "length": 2925,
+            "width": 45,
+            "heading": 140
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [72.8650, 19.0950],
+            [72.8750, 19.0950],
+            [72.8850, 19.0900],
+            [72.8850, 19.0800],
+            [72.8750, 19.0750],
+            [72.8650, 19.0750],
+            [72.8550, 19.0800],
+            [72.8550, 19.0900],
+            [72.8650, 19.0950]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "atc_tower",
+        "name": "BOM Tower",
+        "height": 67.5,
+        "frequency": "121.05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8700, 19.0875, 67.5]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "terminal",
+        "name": "Terminal 2",
+        "capacity": 40000000
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8680, 19.0850]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "parking_stand",
+        "stands": ["B1", "B2", "B3", "B4", "B5"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8670, 19.0870]
+      }
+    }
+  ]
+}

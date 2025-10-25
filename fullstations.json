@@ -1,0 +1,240 @@
+{
+  "type": "RailwayStationDatabase",
+  "metadata": {
+    "version": "1.0",
+    "total_zones": 18,
+    "country": "India",
+    "last_updated": "2025-10-16",
+    "note": "This is a template structure. Expand each zone with complete station list."
+  },
+  "zones": {
+    "Northern Railway": {
+      "zone_code": "NR",
+      "headquarters": "New Delhi",
+      "features": [
+        {"type":"Feature","properties":{"name":"New Delhi","code":"NDLS","category":"A1"},"geometry":{"type":"Point","coordinates":[77.2219,28.6415]}},
+        {"type":"Feature","properties":{"name":"Old Delhi Junction","code":"DLI","category":"A1"},"geometry":{"type":"Point","coordinates":[77.2289,28.6632]}},
+        {"type":"Feature","properties":{"name":"Hazrat Nizamuddin","code":"NZM","category":"A"},"geometry":{"type":"Point","coordinates":[77.2507,28.5868]}},
+        {"type":"Feature","properties":{"name":"Anand Vihar Terminal","code":"ANVT","category":"A"},"geometry":{"type":"Point","coordinates":[77.3158,28.6469]}},
+        {"type":"Feature","properties":{"name":"Ghaziabad","code":"GZB","category":"A"},"geometry":{"type":"Point","coordinates":[77.4498,28.6676]}},
+        {"type":"Feature","properties":{"name":"Moradabad","code":"MB","category":"A"},"geometry":{"type":"Point","coordinates":[78.7733,28.8386]}},
+        {"type":"Feature","properties":{"name":"Bareilly","code":"BE","category":"A"},"geometry":{"type":"Point","coordinates":[79.4152,28.3640]}},
+        {"type":"Feature","properties":{"name":"Lucknow","code":"LKO","category":"A1"},"geometry":{"type":"Point","coordinates":[80.9231,26.8393]}},
+        {"type":"Feature","properties":{"name":"Kanpur Central","code":"CNB","category":"A1"},"geometry":{"type":"Point","coordinates":[80.3319,26.4499]}},
+        {"type":"Feature","properties":{"name":"Ambala Cantt","code":"UMB","category":"A"},"geometry":{"type":"Point","coordinates":[76.8370,30.3623]}},
+        {"type":"Feature","properties":{"name":"Amritsar","code":"ASR","category":"A"},"geometry":{"type":"Point","coordinates":[74.8723,31.6340]}},
+        {"type":"Feature","properties":{"name":"Pathankot","code":"PTK","category":"A"},"geometry":{"type":"Point","coordinates":[75.6525,32.2733]}},
+        {"type":"Feature","properties":{"name":"Jammu Tawi","code":"JAT","category":"A"},"geometry":{"type":"Point","coordinates":[74.8560,32.7099]}},
+        {"type":"Feature","properties":{"name":"Firozpur Cantt","code":"FZR","category":"A"},"geometry":{"type":"Point","coordinates":[74.6142,30.9257]}}
+      ]
+    },
+    "North Eastern Railway": {
+      "zone_code": "NER",
+      "headquarters": "Gorakhpur",
+      "features": [
+        {"type":"Feature","properties":{"name":"Gorakhpur","code":"GKP","category":"A"},"geometry":{"type":"Point","coordinates":[83.3732,26.7606]}},
+        {"type":"Feature","properties":{"name":"Varanasi","code":"BSB","category":"A"},"geometry":{"type":"Point","coordinates":[82.9739,25.3176]}},
+        {"type":"Feature","properties":{"name":"Allahabad","code":"ALD","category":"A1"},"geometry":{"type":"Point","coordinates":[81.8463,25.4358]}},
+        {"type":"Feature","properties":{"name":"Pt. Deen Dayal Upadhyaya Jn","code":"DDU","category":"A"},"geometry":{"type":"Point","coordinates":[83.5174,25.2916]}},
+        {"type":"Feature","properties":{"name":"Gonda Junction","code":"GD","category":"A"},"geometry":{"type":"Point","coordinates":[81.9500,27.1333]}},
+        {"type":"Feature","properties":{"name":"Basti","code":"BST","category":"B"},"geometry":{"type":"Point","coordinates":[82.7389,26.8048]}}
+      ]
+    },
+    "Eastern Railway": {
+      "zone_code": "ER",
+      "headquarters": "Kolkata",
+      "features": [
+        {"type":"Feature","properties":{"name":"Howrah","code":"HWH","category":"A1"},"geometry":{"type":"Point","coordinates":[88.3426,22.5826]}},
+        {"type":"Feature","properties":{"name":"Sealdah","code":"SDAH","category":"A1"},"geometry":{"type":"Point","coordinates":[88.3697,22.5697]}},
+        {"type":"Feature","properties":{"name":"Kolkata","code":"KOAA","category":"A1"},"geometry":{"type":"Point","coordinates":[88.3630,22.5626]}},
+        {"type":"Feature","properties":{"name":"Asansol","code":"ASN","category":"A"},"geometry":{"type":"Point","coordinates":[86.9663,23.6890]}},
+        {"type":"Feature","properties":{"name":"Durgapur","code":"DGR","category":"A"},"geometry":{"type":"Point","coordinates":[87.3080,23.5204]}},
+        {"type":"Feature","properties":{"name":"Barddhaman","code":"BWN","category":"A"},"geometry":{"type":"Point","coordinates":[87.8634,23.2324]}},
+        {"type":"Feature","properties":{"name":"Malda Town","code":"MLDT","category":"A"},"geometry":{"type":"Point","coordinates":[88.1411,25.0096]}},
+        {"type":"Feature","properties":{"name":"New Jalpaiguri","code":"NJP","category":"A"},"geometry":{"type":"Point","coordinates":[88.4147,26.6992]}}
+      ]
+    },
+    "East Central Railway": {
+      "zone_code": "ECR",
+      "headquarters": "Hajipur",
+      "features": [
+        {"type":"Feature","properties":{"name":"Patna","code":"PNBE","category":"A1"},"geometry":{"type":"Point","coordinates":[85.1376,25.6022]}},
+        {"type":"Feature","properties":{"name":"Hajipur","code":"HJP","category":"A"},"geometry":{"type":"Point","coordinates":[85.2096,25.6851]}},
+        {"type":"Feature","properties":{"name":"Danapur","code":"DNR","category":"A"},"geometry":{"type":"Point","coordinates":[85.0394,25.5983]}},
+        {"type":"Feature","properties":{"name":"Muzaffarpur","code":"MFP","category":"A"},"geometry":{"type":"Point","coordinates":[85.3906,26.1225]}},
+        {"type":"Feature","properties":{"name":"Samastipur","code":"SPJ","category":"A"},"geometry":{"type":"Point","coordinates":[85.7806,25.8622]}},
+        {"type":"Feature","properties":{"name":"Darbhanga","code":"DBG","category":"A"},"geometry":{"type":"Point","coordinates":[85.8918,26.1542]}},
+        {"type":"Feature","properties":{"name":"Ara","code":"ARA","category":"A"},"geometry":{"type":"Point","coordinates":[84.6672,25.5571]}},
+        {"type":"Feature","properties":{"name":"Buxar","code":"BXR","category":"A"},"geometry":{"type":"Point","coordinates":[83.9777,25.5647]}},
+        {"type":"Feature","properties":{"name":"Bakhtiyarpur","code":"BKP","category":"B"},"geometry":{"type":"Point","coordinates":[85.5332,25.4622]}},
+        {"type":"Feature","properties":{"name":"Mokama","code":"MKA","category":"A"},"geometry":{"type":"Point","coordinates":[85.9196,25.3948]}},
+        {"type":"Feature","properties":{"name":"Kiul","code":"KIUL","category":"A"},"geometry":{"type":"Point","coordinates":[86.1035,25.1720]}},
+        {"type":"Feature","properties":{"name":"Jhajha","code":"JAJ","category":"A"},"geometry":{"type":"Point","coordinates":[86.3871,24.7726]}},
+        {"type":"Feature","properties":{"name":"Jasidih","code":"JSME","category":"A"},"geometry":{"type":"Point","coordinates":[86.6413,24.5139]}},
+        {"type":"Feature","properties":{"name":"Madhupur","code":"MDP","category":"B"},"geometry":{"type":"Point","coordinates":[86.6390,24.2740]}}
+      ]
+    },
+    "Western Railway": {
+      "zone_code": "WR",
+      "headquarters": "Mumbai",
+      "features": [
+        {"type":"Feature","properties":{"name":"Mumbai Central","code":"BCT","category":"A1"},"geometry":{"type":"Point","coordinates":[72.8195,18.9685]}},
+        {"type":"Feature","properties":{"name":"Dadar","code":"DR","category":"A"},"geometry":{"type":"Point","coordinates":[72.8478,19.0178]}},
+        {"type":"Feature","properties":{"name":"Ahmedabad","code":"ADI","category":"A1"},"geometry":{"type":"Point","coordinates":[72.5714,23.0225]}},
+        {"type":"Feature","properties":{"name":"Vadodara","code":"BRC","category":"A"},"geometry":{"type":"Point","coordinates":[73.1812,22.3072]}},
+        {"type":"Feature","properties":{"name":"Surat","code":"ST","category":"A"},"geometry":{"type":"Point","coordinates":[72.8302,21.1959]}},
+        {"type":"Feature","properties":{"name":"Rajkot","code":"RJT","category":"A"},"geometry":{"type":"Point","coordinates":[70.7783,22.2971]}},
+        {"type":"Feature","properties":{"name":"Bhavnagar","code":"BVC","category":"A"},"geometry":{"type":"Point","coordinates":[72.1519,21.7645]}},
+        {"type":"Feature","properties":{"name":"Jamnagar","code":"JAM","category":"A"},"geometry":{"type":"Point","coordinates":[70.0577,22.4707]}},
+        {"type":"Feature","properties":{"name":"Ratlam","code":"RTM","category":"A"},"geometry":{"type":"Point","coordinates":[75.0367,23.3315]}},
+        {"type":"Feature","properties":{"name":"Indore","code":"INDB","category":"A"},"geometry":{"type":"Point","coordinates":[75.8577,22.7196]}}
+      ]
+    },
+    "Central Railway": {
+      "zone_code": "CR",
+      "headquarters": "Mumbai",
+      "features": [
+        {"type":"Feature","properties":{"name":"Chhatrapati Shivaji Terminus","code":"CSMT","category":"A1"},"geometry":{"type":"Point","coordinates":[72.8355,18.9398]}},
+        {"type":"Feature","properties":{"name":"Lokmanya Tilak Terminus","code":"LTT","category":"A1"},"geometry":{"type":"Point","coordinates":[72.8914,19.0686]}},
+        {"type":"Feature","properties":{"name":"Pune","code":"PUNE","category":"A1"},"geometry":{"type":"Point","coordinates":[73.8740,18.5284]}},
+        {"type":"Feature","properties":{"name":"Nagpur","code":"NGP","category":"A1"},"geometry":{"type":"Point","coordinates":[79.0882,21.1458]}},
+        {"type":"Feature","properties":{"name":"Solapur","code":"SUR","category":"A"},"geometry":{"type":"Point","coordinates":[75.9064,17.6599]}},
+        {"type":"Feature","properties":{"name":"Bhusaval","code":"BSL","category":"A"},"geometry":{"type":"Point","coordinates":[75.7849,21.0444]}},
+        {"type":"Feature","properties":{"name":"Manmad","code":"MMR","category":"A"},"geometry":{"type":"Point","coordinates":[74.4383,20.2528]}}
+      ]
+    },
+    "Southern Railway": {
+      "zone_code": "SR",
+      "headquarters": "Chennai",
+      "features": [
+        {"type":"Feature","properties":{"name":"Chennai Central","code":"MAS","category":"A1"},"geometry":{"type":"Point","coordinates":[80.2707,13.0827]}},
+        {"type":"Feature","properties":{"name":"Chennai Egmore","code":"MS","category":"A1"},"geometry":{"type":"Point","coordinates":[80.2608,13.0754]}},
+        {"type":"Feature","properties":{"name":"Coimbatore","code":"CBE","category":"A"},"geometry":{"type":"Point","coordinates":[76.9558,11.0168]}},
+        {"type":"Feature","properties":{"name":"Madurai","code":"MDU","category":"A"},"geometry":{"type":"Point","coordinates":[78.1198,9.9252]}},
+        {"type":"Feature","properties":{"name":"Tiruchirappalli","code":"TPJ","category":"A"},"geometry":{"type":"Point","coordinates":[78.6869,10.8155]}},
+        {"type":"Feature","properties":{"name":"Salem","code":"SA","category":"A"},"geometry":{"type":"Point","coordinates":[78.1460,11.6643]}},
+        {"type":"Feature","properties":{"name":"Tirunelveli","code":"TEN","category":"A"},"geometry":{"type":"Point","coordinates":[77.7567,8.7139]}},
+        {"type":"Feature","properties":{"name":"Kanyakumari","code":"CAPE","category":"B"},"geometry":{"type":"Point","coordinates":[77.5385,8.0883]}}
+      ]
+    },
+    "South Central Railway": {
+      "zone_code": "SCR",
+      "headquarters": "Secunderabad",
+      "features": [
+        {"type":"Feature","properties":{"name":"Secunderabad","code":"SC","category":"A1"},"geometry":{"type":"Point","coordinates":[78.5003,17.4399]}},
+        {"type":"Feature","properties":{"name":"Hyderabad","code":"HYB","category":"A1"},"geometry":{"type":"Point","coordinates":[78.4867,17.3850]}},
+        {"type":"Feature","properties":{"name":"Vijayawada","code":"BZA","category":"A1"},"geometry":{"type":"Point","coordinates":[80.6305,16.5193]}},
+        {"type":"Feature","properties":{"name":"Visakhapatnam","code":"VSKP","category":"A"},"geometry":{"type":"Point","coordinates":[83.2978,17.7042]}},
+        {"type":"Feature","properties":{"name":"Guntur","code":"GNT","category":"A"},"geometry":{"type":"Point","coordinates":[80.4365,16.3067]}},
+        {"type":"Feature","properties":{"name":"Rajahmundry","code":"RJY","category":"A"},"geometry":{"type":"Point","coordinates":[81.7777,17.0005]}},
+        {"type":"Feature","properties":{"name":"Warangal","code":"WL","category":"A"},"geometry":{"type":"Point","coordinates":[79.5941,17.9784]}}
+      ]
+    },
+    "South Western Railway": {
+      "zone_code": "SWR",
+      "headquarters": "Hubli",
+      "features": [
+        {"type":"Feature","properties":{"name":"KSR Bengaluru","code":"SBC","category":"A1"},"geometry":{"type":"Point","coordinates":[77.5713,12.9776]}},
+        {"type":"Feature","properties":{"name":"Yeshwantpur","code":"YPR","category":"A1"},"geometry":{"type":"Point","coordinates":[77.5386,13.0283]}},
+        {"type":"Feature","properties":{"name":"Mysore","code":"MYS","category":"A"},"geometry":{"type":"Point","coordinates":[76.6394,12.3078]}},
+        {"type":"Feature","properties":{"name":"Hubli","code":"UBL","category":"A"},"geometry":{"type":"Point","coordinates":[75.1240,15.3647]}},
+        {"type":"Feature","properties":{"name":"Belgaum","code":"BGM","category":"A"},"geometry":{"type":"Point","coordinates":[74.5089,15.8497]}},
+        {"type":"Feature","properties":{"name":"Mangalore","code":"MAQ","category":"A"},"geometry":{"type":"Point","coordinates":[74.8560,12.9141]}}
+      ]
+    },
+    "North Western Railway": {
+      "zone_code": "NWR",
+      "headquarters": "Jaipur",
+      "features": [
+        {"type":"Feature","properties":{"name":"Jaipur","code":"JP","category":"A1"},"geometry":{"type":"Point","coordinates":[75.7873,26.9124]}},
+        {"type":"Feature","properties":{"name":"Ajmer","code":"AII","category":"A"},"geometry":{"type":"Point","coordinates":[74.6399,26.4499]}},
+        {"type":"Feature","properties":{"name":"Jodhpur","code":"JU","category":"A"},"geometry":{"type":"Point","coordinates":[73.0243,26.2389]}},
+        {"type":"Feature","properties":{"name":"Bikaner","code":"BKN","category":"A"},"geometry":{"type":"Point","coordinates":[73.3119,28.0229]}},
+        {"type":"Feature","properties":{"name":"Udaipur","code":"UDZ","category":"A"},"geometry":{"type":"Point","coordinates":[73.7125,24.5854]}},
+        {"type":"Feature","properties":{"name":"Abu Road","code":"ABR","category":"B"},"geometry":{"type":"Point","coordinates":[72.7809,24.4821]}}
+      ]
+    },
+    "West Central Railway": {
+      "zone_code": "WCR",
+      "headquarters": "Jabalpur",
+      "features": [
+        {"type":"Feature","properties":{"name":"Jabalpur","code":"JBP","category":"A1"},"geometry":{"type":"Point","coordinates":[79.9864,23.1815]}},
+        {"type":"Feature","properties":{"name":"Bhopal","code":"BPL","category":"A1"},"geometry":{"type":"Point","coordinates":[77.4126,23.2599]}},
+        {"type":"Feature","properties":{"name":"Itarsi","code":"ET","category":"A"},"geometry":{"type":"Point","coordinates":[77.7606,22.6147]}},
+        {"type":"Feature","properties":{"name":"Katni","code":"KTE","category":"A"},"geometry":{"type":"Point","coordinates":[80.3942,23.8352]}},
+        {"type":"Feature","properties":{"name":"Satna","code":"STA","category":"A"},"geometry":{"type":"Point","coordinates":[80.8333,24.5667]}}
+      ]
+    },
+    "South East Central Railway": {
+      "zone_code": "SECR",
+      "headquarters": "Bilaspur",
+      "features": [
+        {"type":"Feature","properties":{"name":"Bilaspur","code":"BSP","category":"A"},"geometry":{"type":"Point","coordinates":[82.1409,22.0797]}},
+        {"type":"Feature","properties":{"name":"Raipur","code":"R","category":"A"},"geometry":{"type":"Point","coordinates":[81.6296,21.2514]}},
+        {"type":"Feature","properties":{"name":"Durg","code":"DURG","category":"A"},"geometry":{"type":"Point","coordinates":[81.2849,21.1900]}},
+        {"type":"Feature","properties":{"name":"Korba","code":"KRBA","category":"B"},"geometry":{"type":"Point","coordinates":[82.7501,22.3595]}}
+      ]
+    },
+    "East Coast Railway": {
+      "zone_code": "ECoR",
+      "headquarters": "Bhubaneswar",
+      "features": [
+        {"type":"Feature","properties":{"name":"Bhubaneswar","code":"BBS","category":"A1"},"geometry":{"type":"Point","coordinates":[85.8245,20.2961]}},
+        {"type":"Feature","properties":{"name":"Puri","code":"PURI","category":"A"},"geometry":{"type":"Point","coordinates":[85.8312,19.8135]}},
+        {"type":"Feature","properties":{"name":"Cuttack","code":"CTC","category":"A"},"geometry":{"type":"Point","coordinates":[85.8830,20.4625]}},
+        {"type":"Feature","properties":{"name":"Sambalpur","code":"SBP","category":"A"},"geometry":{"type":"Point","coordinates":[83.9812,21.4669]}},
+        {"type":"Feature","properties":{"name":"Balasore","code":"BLS","category":"A"},"geometry":{"type":"Point","coordinates":[86.9336,21.4934]}}
+      ]
+    },
+    "South Eastern Railway": {
+      "zone_code": "SER",
+      "headquarters": "Kolkata",
+      "features": [
+        {"type":"Feature","properties":{"name":"Kharagpur","code":"KGP","category":"A1"},"geometry":{"type":"Point","coordinates":[87.3119,22.3460]}},
+        {"type":"Feature","properties":{"name":"Tatanagar","code":"TATA","category":"A"},"geometry":{"type":"Point","coordinates":[86.2029,22.8046]}},
+        {"type":"Feature","properties":{"name":"Ranchi","code":"RNC","category":"A"},"geometry":{"type":"Point","coordinates":[85.3222,23.3569]}},
+        {"type":"Feature","properties":{"name":"Chakradharpur","code":"CKP","category":"A"},"geometry":{"type":"Point","coordinates":[85.6301,22.6953]}},
+        {"type":"Feature","properties":{"name":"Rourkela","code":"ROU","category":"A"},"geometry":{"type":"Point","coordinates":[84.8536,22.2604]}}
+      ]
+    },
+    "North East Frontier Railway": {
+      "zone_code": "NFR",
+      "headquarters": "Guwahati",
+      "features": [
+        {"type":"Feature","properties":{"name":"Guwahati","code":"GHY","category":"A1"},"geometry":{"type":"Point","coordinates":[91.7470,26.1884]}},
+        {"type":"Feature","properties":{"name":"Dibrugarh","code":"DBRG","category":"A"},"geometry":{"type":"Point","coordinates":[94.9120,27.4728]}},
+        {"type":"Feature","properties":{"name":"Tinsukia","code":"NTSK","category":"A"},"geometry":{"type":"Point","coordinates":[95.3600,27.4900]}},
+        {"type":"Feature","properties":{"name":"Lumding","code":"LMG","category":"A"},"geometry":{"type":"Point","coordinates":[93.1700,25.7500]}},
+        {"type":"Feature","properties":{"name":"Silchar","code":"SCL","category":"A"},"geometry":{"type":"Point","coordinates":[92.7789,24.8333]}},
+        {"type":"Feature","properties":{"name":"Agartala","code":"AGTL","category":"A"},"geometry":{"type":"Point","coordinates":[91.2868,23.8315]}}
+      ]
+    },
+    "North Central Railway": {
+      "zone_code": "NCR",
+      "headquarters": "Allahabad",
+      "features": [
+        {"type":"Feature","properties":{"name":"Jhansi","code":"JHS","category":"A"},"geometry":{"type":"Point","coordinates":[78.5685,25.4484]}},
+        {"type":"Feature","properties":{"name":"Agra Cantt","code":"AGC","category":"A"},"geometry":{"type":"Point","coordinates":[77.9998,27.1767]}},
+        {"type":"Feature","properties":{"name":"Mathura Junction","code":"MTJ","category":"A"},"geometry":{"type":"Point","coordinates":[77.6737,27.4924]}},
+        {"type":"Feature","properties":{"name":"Tundla Junction","code":"TDL","category":"A"},"geometry":{"type":"Point","coordinates":[78.2833,27.2167]}}
+      ]
+    },
+    "South Coast Railway": {
+      "zone_code": "SCoR",
+      "headquarters": "Visakhapatnam",
+      "features": [
+        {"type":"Feature","properties":{"name":"Vizianagaram","code":"VZM","category":"A"},"geometry":{"type":"Point","coordinates":[83.4127,18.1067]}},
+        {"type":"Feature","properties":{"name":"Srikakulam Road","code":"CHE","category":"A"},"geometry":{"type":"Point","coordinates":[83.8938,18.2957]}}
+      ]
+    },
+    "Metro Railway Kolkata": {
+      "zone_code": "MR",
+      "headquarters": "Kolkata",
+      "features": [
+        {"type":"Feature","properties":{"name":"Dum Dum","code":"DDUM","category":"Metro"},"geometry":{"type":"Point","coordinates":[88.4247,22.6552]}},
+        {"type":"Feature","properties":{"name":"Noapara","code":"NOAPR","category":"Metro"},"geometry":{"type":"Point","coordinates":[88.3848,22.6387]}},
+        {"type":"Feature","properties":{"name":"Dakshineswar","code":"DKSH","category":"Metro"},"geometry":{"type":"Point","coordinates":[88.3631,22.6547]}}
+      ]
+    }
+  }
+}

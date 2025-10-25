@@ -1,0 +1,220 @@
+{
+  "type": "FeatureCollection",
+  "name": "Dynamic Assets",
+  "metadata": {
+    "update_interval": 5000,
+    "render_zoom_levels": {
+      "drones": [0.1, 10],
+      "vehicles": [0.1, 5],
+      "aircraft": [1, 20],
+      "ships": [0.5, 15]
+    }
+  },
+  "assets": [
+    {
+      "id": "drone_001",
+      "type": "Feature",
+      "properties": {
+        "name": "Surveillance Drone #1",
+        "type": "drone",
+        "subtype": "surveillance",
+        "status": "active",
+        "speed_kmh": 45,
+        "altitude_m": 150,
+        "battery": 85,
+        "render_at_zoom": [0.1, 10],
+        "icon": "🚁",
+        "color": "#00ff00",
+        "size": 3,
+        "movement": {
+          "can_move": true,
+          "movement_pattern": "patrol",
+          "waypoints": [
+            [77.2090, 28.6139],
+            [77.2190, 28.6239],
+            [77.2290, 28.6139],
+            [77.2190, 28.6039]
+          ],
+          "current_waypoint": 0,
+          "speed": 0.001,
+          "auto_pilot": true
+        },
+        "sensors": {
+          "camera": true,
+          "thermal": true,
+          "gps": true
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2090, 28.6139]
+      }
+    },
+    {
+      "id": "drone_002",
+      "type": "Feature",
+      "properties": {
+        "name": "Delivery Drone #2",
+        "type": "drone",
+        "subtype": "delivery",
+        "status": "in_transit",
+        "speed_kmh": 60,
+        "altitude_m": 120,
+        "battery": 67,
+        "render_at_zoom": [0.1, 8],
+        "icon": "📦",
+        "color": "#ff8c00",
+        "size": 2.5,
+        "movement": {
+          "can_move": true,
+          "movement_pattern": "direct",
+          "start_point": [77.1025, 28.5672],
+          "end_point": [77.2588, 28.5535],
+          "current_progress": 0.3,
+          "speed": 0.002,
+          "auto_pilot": true
+        },
+        "cargo": {
+          "weight_kg": 2.5,
+          "type": "package",
+          "destination": "Lotus Temple Area"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.1456, 28.5592]
+      }
+    },
+    {
+      "id": "vehicle_001",
+      "type": "Feature",
+      "properties": {
+        "name": "Police Patrol #1",
+        "type": "vehicle",
+        "subtype": "police",
+        "status": "patrolling",
+        "speed_kmh": 35,
+        "render_at_zoom": [0.1, 5],
+        "icon": "🚔",
+        "color": "#0000ff",
+        "size": 2,
+        "movement": {
+          "can_move": true,
+          "movement_pattern": "road_patrol",
+          "route": [
+            [77.2090, 28.6139],
+            [77.2110, 28.6159],
+            [77.2130, 28.6139],
+            [77.2110, 28.6119]
+          ],
+          "current_position": 0,
+          "speed": 0.0008,
+          "follows_roads": true
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2090, 28.6139]
+      }
+    },
+    {
+      "id": "aircraft_001",
+      "type": "Feature",
+      "properties": {
+        "name": "Flight AI-101",
+        "type": "aircraft",
+        "subtype": "commercial",
+        "status": "approaching",
+        "speed_kmh": 280,
+        "altitude_m": 3000,
+        "render_at_zoom": [1, 20],
+        "icon": "✈️",
+        "color": "#1e90ff",
+        "size": 4,
+        "movement": {
+          "can_move": true,
+          "movement_pattern": "flight_path",
+          "departure": "Mumbai",
+          "arrival": "Delhi",
+          "flight_level": 100,
+          "waypoints": [
+            [77.1025, 28.5672],
+            [77.1200, 28.5800],
+            [77.1400, 28.5950]
+          ],
+          "current_waypoint": 1,
+          "speed": 0.01,
+          "auto_pilot": true
+        },
+        "flight_info": {
+          "airline": "Air India",
+          "flight_number": "AI-101",
+          "passengers": 180,
+          "eta": "14:30"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.1200, 28.5800]
+      }
+    },
+    {
+      "id": "train_001",
+      "type": "Feature",
+      "properties": {
+        "name": "Rajdhani Express",
+        "type": "train",
+        "subtype": "express",
+        "status": "running",
+        "speed_kmh": 120,
+        "render_at_zoom": [0.5, 15],
+        "icon": "🚄",
+        "color": "#ff4500",
+        "size": 3,
+        "movement": {
+          "can_move": true,
+          "movement_pattern": "rail_track",
+          "route": "Mumbai-Delhi",
+          "stations": [
+            { "name": "NDLS", "coords": [77.2090, 28.6139], "arrival": "14:00" },
+            { "name": "CNB", "coords": [78.1642, 26.7606], "arrival": "16:30" }
+          ],
+          "current_station_index": 0,
+          "speed": 0.005,
+          "on_schedule": true
+        },
+        "train_info": {
+          "number": "12951",
+          "coaches": 22,
+          "capacity": 1200
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2090, 28.6139]
+      }
+    }
+  ],
+  "movement_patterns": {
+    "patrol": {
+      "description": "Circular patrol around waypoints",
+      "update_frequency": 1000
+    },
+    "direct": {
+      "description": "Direct line movement from start to end",
+      "update_frequency": 500
+    },
+    "road_patrol": {
+      "description": "Follow road network for patrol",
+      "update_frequency": 2000
+    },
+    "flight_path": {
+      "description": "Follow aviation routes",
+      "update_frequency": 3000
+    },
+    "rail_track": {
+      "description": "Follow railway tracks",
+      "update_frequency": 5000
+    }
+  }
+}

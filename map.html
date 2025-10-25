@@ -1,0 +1,214 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html>
+<head>
+    <title>Indian Railway Stations Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <script src="leaflet/leaflet.js"></script>
+    <style>
+        #map { height: 100vh; width: 100%; }
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Initialize map with standard geographic coordinates (offline)
+        var map = L.map('map', {
+            minZoom: 4,
+            maxZoom: 8
+        }).setView([20.5937, 78.9629], 5); // Center of India
+
+        // Define India's geographic bounds
+        var indiaBounds = {
+            north: 37.0,
+            south: 7.0,  
+            east: 97.5,
+            west: 68.0
+        };
+
+        // Create a simple background (no tiles needed)
+        var canvas = L.canvas();
+        map.addLayer(canvas);
+
+        // Add a simple background color
+        map.getContainer().style.backgroundColor = '#a8d8ea';
+
+        // India boundary GeoJSON (embedded to avoid CORS issues)
+        var indiaBoundary = {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature",
+                "properties": {"name": "India"},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [77.837451, 35.49401], [78.912269, 34.321936], [78.811086, 33.506198], [79.208892, 32.994395],
+                        [79.176129, 32.48378], [78.458446, 32.618164], [78.738894, 31.515906], [79.721367, 30.882715],
+                        [81.111256, 30.183481], [80.476721, 29.729865], [80.088425, 28.79447], [81.057203, 28.416095],
+                        [81.999987, 27.925479], [83.304249, 27.364506], [84.675018, 27.234901], [85.251779, 26.726198],
+                        [86.024393, 26.630985], [87.227472, 26.397898], [88.060238, 26.414615], [88.174804, 26.810405],
+                        [88.043133, 27.445819], [88.120441, 27.876542], [88.730326, 28.086865], [88.814248, 27.299316],
+                        [88.835643, 27.098966], [89.744528, 26.719403], [90.373275, 26.875724], [91.217513, 26.808648],
+                        [92.033484, 26.83831], [92.103712, 27.452614], [91.696656, 27.771742], [92.503119, 27.896876],
+                        [93.413348, 28.640629], [94.56599, 29.277438], [95.404802, 29.031717], [96.117679, 29.452802],
+                        [96.586591, 28.83098], [96.248833, 28.411031], [97.327114, 28.261583], [97.402561, 27.882536],
+                        [97.051989, 27.699059], [97.133999, 27.083774], [96.419366, 27.264589], [95.124768, 26.573572],
+                        [95.155153, 26.001307], [94.603249, 25.162495], [94.552658, 24.675238], [94.106742, 23.850741],
+                        [93.325188, 24.078556], [93.286327, 23.043658], [93.060294, 22.703111], [93.166128, 22.27846],
+                        [92.672721, 22.041239], [92.146035, 23.627499], [91.869928, 23.624346], [91.706475, 22.985264],
+                        [91.158963, 23.503527], [91.46773, 24.072639], [91.915093, 24.130414], [92.376202, 24.976693],
+                        [91.799596, 25.147432], [90.872211, 25.132601], [89.920693, 25.26975], [89.832481, 25.965082],
+                        [89.355094, 26.014407], [88.563049, 26.446526], [88.209789, 25.768066], [88.931554, 25.238692],
+                        [88.306373, 24.866079], [88.084422, 24.501657], [88.69994, 24.233715], [88.52977, 23.631142],
+                        [88.876312, 22.879146], [89.031961, 22.055708], [88.888766, 21.690588], [88.208497, 21.703172],
+                        [86.975704, 21.495562], [87.033169, 20.743308], [86.499351, 20.151638], [85.060266, 19.478579],
+                        [83.941006, 18.30201], [83.189049, 17.671221], [82.192969, 17.016636], [82.191242, 16.556664],
+                        [81.692719, 16.310219], [80.791999, 15.951972], [80.324896, 15.899185], [80.025069, 15.136415],
+                        [80.233274, 13.835771], [80.286294, 13.006261], [79.862547, 12.056215], [79.857999, 10.357275],
+                        [79.340512, 10.308854], [78.885345, 9.546136], [79.18972, 9.216544], [78.277941, 8.933047],
+                        [77.941165, 8.252959], [77.539898, 7.965535], [76.592979, 8.899276], [76.130770, 10.29963],
+                        [75.746467, 11.308251], [75.396101, 11.781245], [74.864816, 12.741936], [74.616717, 13.992583],
+                        [74.443859, 14.617222], [73.534199, 15.990652], [73.119909, 17.92857], [72.820911, 19.208234],
+                        [72.824475, 20.419503], [72.630533, 21.356009], [71.175273, 20.757441], [70.470459, 20.877331],
+                        [69.16413, 22.089298], [69.644928, 22.450775], [69.349597, 22.84318], [68.176645, 23.691965],
+                        [68.842599, 24.359134], [71.04324, 24.356524], [70.844699, 25.215102], [70.282873, 25.722229],
+                        [70.168927, 26.491872], [69.514393, 26.940966], [70.616496, 27.989196], [71.777666, 27.91318],
+                        [72.823752, 28.961592], [73.450638, 29.976413], [74.42138, 30.979815], [74.405929, 31.692639],
+                        [75.258642, 32.271105], [74.451559, 32.7649], [74.104294, 33.441473], [73.749948, 34.317699],
+                        [74.240203, 34.748887], [75.757061, 34.504923], [76.871722, 34.653544], [77.837451, 35.49401]
+                    ]]
+                }
+            }]
+        };
+
+        // Railway stations GeoJSON data
+        var stationsGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                {"type":"Feature","properties":{"name":"New Delhi (NDLS)"},"geometry":{"type":"Point","coordinates":[77.2219,28.6415]}},
+                {"type":"Feature","properties":{"name":"Ghaziabad (GZB)"},"geometry":{"type":"Point","coordinates":[77.4498,28.6676]}},
+                {"type":"Feature","properties":{"name":"Moradabad (MB)"},"geometry":{"type":"Point","coordinates":[78.7733,28.8386]}},
+                {"type":"Feature","properties":{"name":"Bareilly (BE)"},"geometry":{"type":"Point","coordinates":[79.4152,28.3640]}},
+                {"type":"Feature","properties":{"name":"Lucknow (LKO)"},"geometry":{"type":"Point","coordinates":[80.9231,26.8393]}},
+                {"type":"Feature","properties":{"name":"Rae Bareli (RBL)"},"geometry":{"type":"Point","coordinates":[81.2331,26.2309]}},
+                {"type":"Feature","properties":{"name":"Pratapgarh (PBH)"},"geometry":{"type":"Point","coordinates":[81.9837,25.8973]}},
+                {"type":"Feature","properties":{"name":"Varanasi (BSB)"},"geometry":{"type":"Point","coordinates":[82.9739,25.3176]}},
+                {"type":"Feature","properties":{"name":"Pt. Deen Dayal Upadhyaya Jn (DDU)"},"geometry":{"type":"Point","coordinates":[83.5174,25.2916]}},
+                {"type":"Feature","properties":{"name":"Buxar (BXR)"},"geometry":{"type":"Point","coordinates":[83.9777,25.5647]}},
+                {"type":"Feature","properties":{"name":"Ara (ARA)"},"geometry":{"type":"Point","coordinates":[84.6672,25.5571]}},
+                {"type":"Feature","properties":{"name":"Patna (PNBE)"},"geometry":{"type":"Point","coordinates":[85.1376,25.6022]}},
+                {"type":"Feature","properties":{"name":"Bakhtiyarpur (BKP)"},"geometry":{"type":"Point","coordinates":[85.5332,25.4622]}},
+                {"type":"Feature","properties":{"name":"Mokama (MKA)"},"geometry":{"type":"Point","coordinates":[85.9196,25.3948]}},
+                {"type":"Feature","properties":{"name":"Kiul (KIUL)"},"geometry":{"type":"Point","coordinates":[86.1035,25.1720]}},
+                {"type":"Feature","properties":{"name":"Jhajha (JAJ)"},"geometry":{"type":"Point","coordinates":[86.3871,24.7726]}},
+                {"type":"Feature","properties":{"name":"Jasidih (JSME)"},"geometry":{"type":"Point","coordinates":[86.6413,24.5139]}},
+                {"type":"Feature","properties":{"name":"Madhupur (MDP)"},"geometry":{"type":"Point","coordinates":[86.6390,24.2740]}},
+                {"type":"Feature","properties":{"name":"Asansol (ASN)"},"geometry":{"type":"Point","coordinates":[86.9663,23.6890]}},
+                {"type":"Feature","properties":{"name":"Durgapur (DGR)"},"geometry":{"type":"Point","coordinates":[87.3080,23.5204]}},
+                {"type":"Feature","properties":{"name":"Barddhaman (BWN)"},"geometry":{"type":"Point","coordinates":[87.8634,23.2324]}},
+                {"type":"Feature","properties":{"name":"Howrah (HWH)"},"geometry":{"type":"Point","coordinates":[88.3426,22.5826]}}
+            ]
+        };
+
+        // Add India boundary to the map
+        L.geoJSON(indiaBoundary, {
+            style: {
+                fillColor: '#90EE90',
+                weight: 2,
+                opacity: 1,
+                color: '#2E8B57',
+                dashArray: '3',
+                fillOpacity: 0.3
+            }
+        }).addTo(map);
+
+        // Add railway stations to the map
+        var stationLayer = L.geoJSON(stationsGeoJSON, {
+            pointToLayer: function(feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 8,
+                    fillColor: '#ff7800',
+                    color: '#000',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+            },
+            onEachFeature: function(feature, layer) {
+                layer.bindPopup('<b>' + feature.properties.name + '</b><br/>' +
+                              'Coordinates: ' + feature.geometry.coordinates[1].toFixed(4) + 
+                              ', ' + feature.geometry.coordinates[0].toFixed(4));
+            }
+        }).addTo(map);
+
+        // Draw polyline connecting stations in order
+        var coordinates = stationsGeoJSON.features.map(feature => 
+            [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]
+        );
+        L.polyline(coordinates, {
+            color: 'red',
+            weight: 4,
+            opacity: 0.8
+        }).addTo(map);
+
+        // Fit map to show all features
+        var group = new L.featureGroup([stationLayer]);
+        map.fitBounds(group.getBounds().pad(0.1));
+
+        // Add custom styles
+        var style = document.createElement('style');
+        style.textContent = `
+            .leaflet-popup-content-wrapper {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 8px;
+                box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+            }
+            .leaflet-popup-tip {
+                background: rgba(255, 255, 255, 0.95);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
