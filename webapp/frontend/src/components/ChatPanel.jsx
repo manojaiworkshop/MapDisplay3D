@@ -41,8 +41,33 @@ const ChatPanel = ({ onSend }) => {
       if (data.actions && Array.isArray(data.actions)) {
         for (const action of data.actions) {
           try {
+            // Handle show_location_view - move camera to location with zoom for 3D scenes
+            if (action.type === 'show_location_view') {
+              const locationName = action.location;
+              console.log('🗺️ show_location_view for:', locationName);
+              
+              // Fetch location coordinates
+              const coordsResp = await fetch(`${BACKEND_URL}/api/location-coordinates/${locationName}`);
+              const coordsData = await coordsResp.json();
+              
+              console.log('📍 Location coordinates:', coordsData);
+              
+              // Move camera to location with specified zoom
+              await onSend({
+                type: 'goto_location',
+                lat: coordsData.lat,
+                lon: coordsData.lon,
+                altitude: action.zoom || 25,  // Use zoom level as altitude
+                duration: 2000
+              });
+              
+              setMessages(prev => [...prev, { 
+                role: 'assistant', 
+                text: `Moving to ${coordsData.name || locationName} (${coordsData.lat.toFixed(4)}, ${coordsData.lon.toFixed(4)})`
+              }]);
+            }
             // Handle location details action - fetch data and show in 3D panel
-            if (action.type === 'show_location_details') {
+            else if (action.type === 'show_location_details') {
               const locationName = action.location || action.parameters?.location;
               const url = `${BACKEND_URL}/api/location/${locationName}?page=1&page_size=50`;
               
@@ -67,6 +92,10 @@ const ChatPanel = ({ onSend }) => {
             }
           } catch (err) {
             console.error('Action failed', err);
+            setMessages(prev => [...prev, { 
+              role: 'assistant', 
+              text: `Error: ${err.message}`
+            }]);
           }
         }
       }

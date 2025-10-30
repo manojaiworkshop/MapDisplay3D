@@ -221,6 +221,172 @@ async def get_llm_status():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/api/location-coordinates/{location_name}")
+async def get_location_coordinates(location_name: str):
+    """Get coordinates for a location name (city, station, etc.)"""
+    try:
+        location_lower = location_name.lower().strip()
+        
+        # Known city coordinates (Indian major cities)
+        # Note: Mumbai points to Andheri where the metro scene is located
+        city_coords = {
+            "mumbai": {"lat": 19.1197, "lon": 72.8464, "name": "Mumbai (Andheri Metro)"},
+            "delhi": {"lat": 28.6139, "lon": 77.2090, "name": "Delhi"},
+            "bangalore": {"lat": 12.9716, "lon": 77.5946, "name": "Bangalore"},
+            "bengaluru": {"lat": 12.9716, "lon": 77.5946, "name": "Bengaluru"},
+            "chennai": {"lat": 13.0827, "lon": 80.2707, "name": "Chennai"},
+            "kolkata": {"lat": 22.5726, "lon": 88.3639, "name": "Kolkata"},
+            "hyderabad": {"lat": 17.3850, "lon": 78.4867, "name": "Hyderabad"},
+            "pune": {"lat": 18.5204, "lon": 73.8567, "name": "Pune"},
+            "ahmedabad": {"lat": 23.0225, "lon": 72.5714, "name": "Ahmedabad"},
+            "jaipur": {"lat": 26.9124, "lon": 75.7873, "name": "Jaipur"},
+            "surat": {"lat": 21.1702, "lon": 72.8311, "name": "Surat"},
+            "lucknow": {"lat": 26.8467, "lon": 80.9462, "name": "Lucknow"},
+            "kanpur": {"lat": 26.4499, "lon": 80.3319, "name": "Kanpur"},
+            "nagpur": {"lat": 21.1458, "lon": 79.0882, "name": "Nagpur"},
+            "indore": {"lat": 22.7196, "lon": 75.8577, "name": "Indore"},
+            "andheri": {"lat": 19.1197, "lon": 72.8464, "name": "Andheri (Mumbai Metro)"}
+        }
+        
+        # Check direct match
+        if location_lower in city_coords:
+            return JSONResponse(content=city_coords[location_lower])
+        
+        # Check partial match
+        for key, value in city_coords.items():
+            if location_lower in key or key in location_lower:
+                return JSONResponse(content=value)
+        
+        # Search in cities file
+        cities_path = DATA_DIR / "cities" / "indian_cities.geojson"
+        if cities_path.exists():
+            with open(cities_path, 'r') as f:
+                cities_data = json.load(f)
+            
+            for feature in cities_data.get('features', []):
+                props = feature.get('properties', {})
+                city_name = props.get('name', '').lower()
+                
+                if location_lower in city_name or city_name in location_lower:
+                    coords = feature['geometry'].get('coordinates', [])
+                    if coords and len(coords) >= 2:
+                        return JSONResponse(content={
+                            "lat": coords[1],
+                            "lon": coords[0],
+                            "name": props.get('name')
+                        })
+        
+        # Search in stations
+        stations_path = DATA_DIR / "fullstations.json"
+        if stations_path.exists():
+            with open(stations_path, 'r') as f:
+                stations_data = json.load(f)
+            
+            if 'zones' in stations_data:
+                for zone_data in stations_data['zones'].values():
+                    for feature in zone_data.get('features', []):
+                        props = feature.get('properties', {})
+                        station_name = props.get('name', '').lower()
+                        
+                        if location_lower in station_name or station_name in location_lower:
+                            return JSONResponse(content={
+                                "lat": props.get('lat'),
+                                "lon": props.get('lon'),
+                                "name": props.get('name')
+                            })
+        
+        raise HTTPException(status_code=404, detail=f"Location '{location_name}' not found")
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error finding location coordinates: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/scenes")
+async def get_scenes():
+    """Get all available 3D scenes"""
+    try:
+        scenes_path = DATA_DIR / "scenes.json"
+        if not scenes_path.exists():
+            return JSONResponse(content={"scenes": []})
+        
+        with open(scenes_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        return JSONResponse(content=data)
+    except Exception as e:
+        logger.error(f"Error loading scenes: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/scenes/at-location")
+async def get_scenes_at_location(lat: float, lon: float, zoom: float = 10):
+    """Get scenes near a specific location and zoom level"""
+    try:
+        scenes_path = DATA_DIR / "scenes.json"
+        if not scenes_path.exists():
+            return JSONResponse(content={"scenes": []})
+        
+        with open(scenes_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        matching_scenes = []
+        
+        for scene in data.get('scenes', []):
+            scene_lat = scene['location']['lat']
+            scene_lon = scene['location']['lon']
+            trigger = scene.get('trigger', {})
+            
+            # Calculate distance (simple approximation)
+            import math
+            lat_diff = abs(lat - scene_lat)
+            lon_diff = abs(lon - scene_lon)
+            distance_km = math.sqrt(lat_diff**2 + lon_diff**2) * 111  # rough km conversion
+            
+            # Check if within radius
+            radius_km = trigger.get('radius', 1000) / 1000  # convert m to km
+            
+            # Check zoom level
+            min_zoom = trigger.get('minZoom', 0)
+            max_zoom = trigger.get('maxZoom', 100)
+            
+            if distance_km <= radius_km and min_zoom <= zoom <= max_zoom:
+                matching_scenes.append(scene)
+        
+        return JSONResponse(content={"scenes": matching_scenes, "count": len(matching_scenes)})
+    
+    except Exception as e:
+        logger.error(f"Error finding scenes at location: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/scenes/{scene_id}")
+async def get_scene(scene_id: str):
+    """Get a specific scene by ID"""
+    try:
+        scenes_path = DATA_DIR / "scenes.json"
+        if not scenes_path.exists():
+            raise HTTPException(status_code=404, detail="Scenes file not found")
+        
+        with open(scenes_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Find the scene
+        scene = next((s for s in data.get('scenes', []) if s['id'] == scene_id), None)
+        
+        if not scene:
+            raise HTTPException(status_code=404, detail=f"Scene {scene_id} not found")
+        
+        return JSONResponse(content=scene)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error loading scene {scene_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # Helper Functions for Multi-Level GeoJSON
 
 def filter_geojson_by_zoom(data, zoom_level):
@@ -491,7 +657,9 @@ async def interpret_command(req: CommandRequest):
                 "goto_location (lat: number, lon: number, altitude: optional number, duration: optional ms) - move camera to specific location, "
                 "show_location_details (location: string, altitude: optional number default 17000, animate: optional boolean default true) - shows detailed information about ANY location/city/station (e.g., Delhi, Mumbai, Kolkata, Chennai, etc.) with zoom animation and displays paginated data table. Extract the location name from the user's query. "
                 "view_location_table (location: string, duration: optional number default 2000) - navigates camera to an already-open location table. Use this when user says 'view [location]', 'go to [location] table', 'show [location] view', etc. This ONLY works if the table is already open. "
-                "Only output valid JSON. For example: [{\"type\":\"view_location_table\",\"location\":\"Delhi\"}] or [{\"type\":\"show_location_details\",\"location\":\"Mumbai\"}].\n\n"
+                "show_location_view (location: string, zoom: optional number default 25) - for commands like 'show location view mumbai', 'view mumbai', 'go to mumbai'. Moves camera to the city/location and zooms in to see 3D scenes. Use zoom=25 for metro stations to trigger 3D scene rendering.\n\n"
+                "IMPORTANT: For any command asking to 'show location view [city]', 'view [city]', or 'go to [city]', use 'show_location_view' action type. "
+                "Only output valid JSON. For example: [{\"type\":\"show_location_view\",\"location\":\"Mumbai\",\"zoom\":25}] or [{\"type\":\"show_location_details\",\"location\":\"Delhi\"}].\n\n"
                 f"Instruction: {text}\n\nJSON:"
             )
 
@@ -612,6 +780,19 @@ async def interpret_command(req: CommandRequest):
             "z": z,
             "duration": 2000
         })
+        return JSONResponse(content={"actions": actions, "method": "rules"})
+    
+    # Show location view: "show location view mumbai", "view mumbai", "go to mumbai"
+    show_view_pattern = r"(?:show\s+location\s+view|view|go\s+to|show)\s+([a-zA-Z\s]+?)(?:\s+station|\s+metro|\s+airport|$)"
+    m_view = re.search(show_view_pattern, lower)
+    if m_view:
+        location_name = m_view.group(1).strip()
+        actions.append({
+            "type": "show_location_view",
+            "location": location_name,
+            "zoom": 25  # Zoom level to trigger 3D scenes
+        })
+        logger.info(f"✅ Parsed show location view: {location_name}")
         return JSONResponse(content={"actions": actions, "method": "rules"})
     
     # Goto location: "goto location 28.64, 77.22" or "camera to lat 28.64 lon 77.22"

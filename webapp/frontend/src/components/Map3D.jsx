@@ -10,6 +10,8 @@ import EnhancedLODManager, { LODDebugPanel, TileGrid } from './EnhancedLODManage
 import MultiLevelDataManager, { GeoJSONRenderer, DynamicAssetAnimator } from './MultiLevelDataManager';
 import LocationDataPanel from './LocationDataPanel';
 import { BACKEND_URL } from '../config/constants';
+import { SceneRenderer } from './scenes/SceneRenderer';
+import { useSceneManager, SceneDebugPanel } from './scenes/SceneManager';
 
 import DebugOverlay from './DebugOverlay';
 // Get current Indian time (IST = UTC+5:30)
@@ -736,6 +738,40 @@ const CameraController = ({ targetPosition, targetLookAt, duration = 2000, onCom
   return null;
 };
 
+// Camera Position Tracker - converts 3D camera position to lat/lon
+const CameraPositionTracker = ({ onPositionUpdate }) => {
+  const { camera } = useThree();
+  const lastUpdateRef = useRef(0);
+  const UPDATE_INTERVAL = 500; // Update every 500ms to avoid too many API calls
+  
+  useFrame(() => {
+    if (!onPositionUpdate) return;
+    
+    const now = Date.now();
+    if (now - lastUpdateRef.current < UPDATE_INTERVAL) return;
+    lastUpdateRef.current = now;
+    
+    // Get camera position
+    const pos = camera.position.clone();
+    
+    // Normalize to get direction
+    const normalized = pos.clone().normalize();
+    
+    // Convert to spherical coordinates
+    const phi = Math.acos(normalized.y); // polar angle (0 to PI)
+    const theta = Math.atan2(normalized.z, normalized.x); // azimuthal angle
+    
+    // Convert to lat/lon
+    const lat = 90 - (phi * 180 / Math.PI);
+    const lon = (theta * 180 / Math.PI);
+    
+    // Update parent component (throttled to avoid too many updates)
+    onPositionUpdate({ lat, lon });
+  });
+  
+  return null;
+};
+
 // Dynamic Scene with day/night cycle
 const Scene = ({ 
   stations, 
@@ -751,7 +787,9 @@ const Scene = ({
   onMultiLevelDataUpdate,
   multiLevelData,
   locationDataPanels,  // Array of location panels
-  mapRef  // Reference to access hideLocationData method
+  mapRef,  // Reference to access hideLocationData method
+  onCameraPositionUpdate,  // Callback for camera position changes
+  activeScenes  // Array of active scenes to render
 }) => {
   const [celestialPos, setCelestialPos] = useState(getCelestialPosition());
   const [isDay, setIsDay] = useState(isDaytime());
@@ -805,6 +843,9 @@ const Scene = ({
         backendUrl={BACKEND_URL}
         debugMode={true}
       />
+      
+      {/* Camera Position Tracker for Scene Loading */}
+      <CameraPositionTracker onPositionUpdate={onCameraPositionUpdate} />
       
       {/* Optional: Tile Grid Visualization (for debugging) */}
       <TileGrid 
@@ -982,6 +1023,11 @@ const Scene = ({
         />
       )}
       
+      {/* 3D Scene Rendering - Metro stations, airports, etc. */}
+      {activeScenes && activeScenes.map((scene) => (
+        <SceneRenderer key={scene.id} scene={scene} />
+      ))}
+      
       {/* Location Data Panels - Multiple 3D-styled panels dynamically positioned */}
       {locationDataPanels.map((panel) => {
         
@@ -1076,6 +1122,12 @@ const Map3D = forwardRef(({
     cities: [],
     assets: []
   });
+  
+  // Camera position for scene loading
+  const [cameraPosition, setCameraPosition] = useState({ lat: 20, lon: 77 });
+  
+  // Scene management - automatically loads scenes based on camera position/zoom
+  const { activeScenes, loading: scenesLoading, error: scenesError } = useSceneManager(cameraPosition, zoomDistance);
   
   // Use LOD stations if available, fallback to prop stations  
   const displayStations = lodStations.length > 0 ? lodStations : stations;
@@ -1461,6 +1513,8 @@ const Map3D = forwardRef(({
           multiLevelData={multiLevelData}
           locationDataPanels={locationDataPanels}
           mapRef={ref}
+          onCameraPositionUpdate={setCameraPosition}
+          activeScenes={activeScenes}
         />
       </Canvas>
       
@@ -1490,6 +1544,15 @@ const Map3D = forwardRef(({
         zoomDistance={zoomDistance}
         stations={displayStations}
         position="top-left"
+      />
+      
+      {/* Scene Debug Panel - shows active 3D scenes */}
+      <SceneDebugPanel 
+        activeScenes={activeScenes}
+        loading={scenesLoading}
+        error={scenesError}
+        cameraPosition={cameraPosition}
+        zoomDistance={zoomDistance}
       />
       
       {/* Progress indicator */}
