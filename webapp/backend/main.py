@@ -8,13 +8,25 @@ from pathlib import Path
 import logging
 
 try:
-    from .config import OPENAI_API_KEY, OPENAI_MODEL, ALLOWED_ORIGINS, OPENAI_TEMPERATURE, OPENAI_MAX_TOKENS, OPENAI_TOP_P, ACTIONS
+    from .config import (
+        ALLOWED_ORIGINS, ACTIONS, config_data,
+        ACTIVE_PROVIDER, FALLBACK_TO_RULES
+    )
+    from .llm_provider import LLMProviderManager
 except Exception:
     # fallback if running as script
-    from config import OPENAI_API_KEY, OPENAI_MODEL, ALLOWED_ORIGINS, OPENAI_TEMPERATURE, OPENAI_MAX_TOKENS, OPENAI_TOP_P, ACTIONS
+    from config import (
+        ALLOWED_ORIGINS, ACTIONS, config_data,
+        ACTIVE_PROVIDER, FALLBACK_TO_RULES
+    )
+    from llm_provider import LLMProviderManager
 
 logger = logging.getLogger("backend")
 logging.basicConfig(level=logging.INFO)
+
+# Initialize LLM Provider Manager
+llm_manager = LLMProviderManager(config_data)
+logger.info(f"🚀 LLM Provider Manager initialized - Active: {llm_manager.active_provider_name}")
 
 app = FastAPI(title="Indian Railway Stations API")
 
@@ -142,6 +154,71 @@ async def get_data_info():
         }
     }
     return info
+
+
+@app.get("/api/llm/providers")
+async def get_llm_providers():
+    """Get list of all available LLM providers and their status"""
+    try:
+        providers = llm_manager.get_available_providers()
+        return JSONResponse(content={
+            "providers": providers,
+            "active": llm_manager.active_provider_name,
+            "fallback_enabled": llm_manager.fallback_to_rules
+        })
+    except Exception as e:
+        logger.error(f"Error getting providers: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class ProviderSwitchRequest(BaseModel):
+    provider: str
+
+
+@app.post("/api/llm/switch-provider")
+async def switch_llm_provider(req: ProviderSwitchRequest):
+    """Switch to a different LLM provider"""
+    try:
+        provider_name = req.provider.lower()
+        success = llm_manager.set_active_provider(provider_name)
+        
+        if success:
+            logger.info(f"✅ Successfully switched to provider: {provider_name}")
+            return JSONResponse(content={
+                "success": True,
+                "provider": provider_name,
+                "message": f"Switched to {provider_name} provider"
+            })
+        else:
+            return JSONResponse(
+                content={
+                    "success": False,
+                    "error": f"Provider {provider_name} is not available or not configured"
+                },
+                status_code=400
+            )
+    except Exception as e:
+        logger.error(f"Error switching provider: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/llm/status")
+async def get_llm_status():
+    """Get current LLM provider status and configuration"""
+    try:
+        provider = llm_manager.get_active_provider()
+        return JSONResponse(content={
+            "active_provider": llm_manager.active_provider_name,
+            "is_available": provider.is_available(),
+            "fallback_enabled": llm_manager.fallback_to_rules,
+            "config": {
+                "model": llm_manager.config.get(llm_manager.active_provider_name, {}).get('model', 'N/A'),
+                "temperature": llm_manager.config.get(llm_manager.active_provider_name, {}).get('temperature', 'N/A')
+            }
+        })
+    except Exception as e:
+        logger.error(f"Error getting LLM status: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # Helper Functions for Multi-Level GeoJSON
@@ -392,14 +469,13 @@ async def interpret_command(req: CommandRequest):
      {"type": "goto_station", "name": "New Delhi (NDLS)"}]
     """
     text = req.text.strip()
-    logger.info(f"Interpreting command: {text}")
+    logger.info(f"🔍 Interpreting command: {text} (Provider: {llm_manager.active_provider_name})")
 
-    # If OpenAI key is configured, use the API to parse into actions
-    if OPENAI_API_KEY:
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=OPENAI_API_KEY)
-
+    # Try to use the active LLM provider
+    try:
+        provider = llm_manager.get_active_provider()
+        
+        if provider.is_available():
             prompt = (
                 "Convert the following user instruction into a JSON array of action objects. "
                 "Actions supported: "
@@ -419,24 +495,30 @@ async def interpret_command(req: CommandRequest):
                 f"Instruction: {text}\n\nJSON:"
             )
 
-            resp = client.chat.completions.create(
-                model=OPENAI_MODEL,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=OPENAI_MAX_TOKENS,
-                temperature=OPENAI_TEMPERATURE,
-                top_p=OPENAI_TOP_P
-            )
-            content = resp.choices[0].message.content.strip()
+            content = llm_manager.generate(prompt)
+            
             # Try to extract JSON from response
             import re
             m = re.search(r"(\[.*\])", content, re.S)
             json_text = m.group(1) if m else content
             actions = json.loads(json_text)
-            return JSONResponse(content={"actions": actions})
-        except Exception as e:
-            logger.exception("OpenAI parse failed, falling back to rule-based parser")
+            
+            logger.info(f"✅ LLM parsed successfully: {actions}")
+            return JSONResponse(content={
+                "actions": actions,
+                "provider": llm_manager.active_provider_name,
+                "method": "llm"
+            })
+        else:
+            logger.warning(f"Provider {llm_manager.active_provider_name} is not available")
+            
+    except Exception as e:
+        logger.error(f"❌ LLM parsing failed: {e}")
+        if not llm_manager.should_fallback_to_rules():
+            raise HTTPException(status_code=500, detail=f"LLM parsing failed: {str(e)}")
 
     # Rule-based fallback parser
+    logger.info("📋 Using rule-based parser as fallback")
     actions = []
     lower = text.lower()
 
@@ -446,45 +528,45 @@ async def interpret_command(req: CommandRequest):
     if m:
         val = float(m.group(1))
         actions.append({"type": "zoom", "mode": "to", "value": val})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Zoom in/out by or to number
     m2 = re.search(r"zoom (in|out) to (\d+(?:\.\d+)?)x", lower)
     if m2:
         direction, val = m2.group(1), float(m2.group(2))
         actions.append({"type": "zoom", "mode": "to", "value": val})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     m3 = re.search(r"zoom (in|out) by (\d+(?:\.\d+)?)x", lower)
     if m3:
         dirc, val = m3.group(1), float(m3.group(2))
         factor = val if dirc == 'in' else (1.0/val)
         actions.append({"type": "zoom", "mode": "by", "value": factor})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Zoom out to full India map
     if re.search(r"zoom\s+out(?:\s+to\s+india)?$", lower) or re.search(r"show\s+full\s+map", lower):
         actions.append({"type": "zoom_out"})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Reset view
     if re.search(r"reset", lower):
         actions.append({"type": "reset"})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Zoom to lat lon
     m4 = re.search(r"zoom to lat[:=\s]*([0-9.+-]+)\s*,?\s*lon[:=\s]*([0-9.+-]+)", lower)
     if m4:
         lat = float(m4.group(1)); lon = float(m4.group(2))
         actions.append({"type": "center", "lat": lat, "lon": lon})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Goto station by name (automatically zooms to 400km radius)
     m5 = re.search(r"goto station (.+)", lower)
     if m5:
         name = m5.group(1).strip()
         actions.append({"type": "goto_station", "name": name})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Start trip from source to destination
     # Pattern: "start trip from X to Y" or "trip from X to Y" with optional speed
@@ -500,7 +582,7 @@ async def interpret_command(req: CommandRequest):
             "destination": destination,
             "speed": speed
         })
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Camera movement: "move camera left/right/up/down by X"
     camera_move_pattern = r"move\s+camera\s+(left|right|up|down|forward|backward)(?:\s+by\s+)?(\d+(?:\.\d+)?)?(?:\s+units?)?"
@@ -516,7 +598,7 @@ async def interpret_command(req: CommandRequest):
         }
         logger.info(f"✅ Parsed camera move action: {action}")
         actions.append(action)
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
     
     # Camera offset: "move camera to x=10 y=20 z=30" or "camera position x 10 y 20 z 30"
     offset_pattern = r"(?:move\s+camera\s+to|camera\s+position)\s+x[:=\s]*([0-9.+-]+)\s*y[:=\s]*([0-9.+-]+)\s*z[:=\s]*([0-9.+-]+)"
@@ -530,7 +612,7 @@ async def interpret_command(req: CommandRequest):
             "z": z,
             "duration": 2000
         })
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
     
     # Goto location: "goto location 28.64, 77.22" or "camera to lat 28.64 lon 77.22"
     goto_loc_pattern = r"(?:goto|move\s+(?:to|camera\s+to))\s+(?:location\s+)?(?:lat\s*)?([0-9.+-]+)\s*,?\s*(?:lon\s*)?([0-9.+-]+)"
@@ -544,14 +626,14 @@ async def interpret_command(req: CommandRequest):
             "altitude": 50,
             "duration": 2000
         })
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
     
     # Fallback: if contains coordinates
     m6 = re.search(r"([0-9.+-]+)\s*,\s*([0-9.+-]+)", lower)
     if m6:
         lat = float(m6.group(1)); lon = float(m6.group(2))
         actions.append({"type": "center", "lat": lat, "lon": lon})
-        return JSONResponse(content={"actions": actions})
+        return JSONResponse(content={"actions": actions, "method": "rules"})
 
     # Unrecognized
     return JSONResponse(content={"actions": [], "error": "Could not parse command"}, status_code=200)
@@ -869,5 +951,5 @@ async def get_stations_by_level(level: int):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8088)
+    uvicorn.run(app, host="0.0.0.0", port=8091)
 

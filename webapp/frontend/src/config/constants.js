@@ -4,7 +4,7 @@
  */
 
 // Backend API Configuration
-export const BACKEND_URL = "http://192.168.1.2:8088";
+export const BACKEND_URL = "http://192.168.1.2:8091";
 
 // API Endpoints
 export const API_ENDPOINTS = {

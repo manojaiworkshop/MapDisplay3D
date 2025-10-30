@@ -1,7 +1,38 @@
+# LLM Provider Configuration
+# Supported providers: openai, ollama, vllm, anthropic
+llm:
+  provider: ollama  # Current active provider: openai | ollama | vllm | anthropic
+  fallback_to_rules: true  # If LLM fails, use regex-based parser
+
+# OpenAI Configuration
 openai:
   api_key: "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"
   model: gpt-4o-mini-2024-07-18
   temperature: 1.0
+  max_tokens: 2048
+  top_p: 1.0
+
+# Ollama Configuration (Local LLM)
+ollama:
+  api_url: http://localhost:11434/api/chat
+  model: mistral:latest
+  temperature: 0.7
+  max_tokens: 2048
+  stream: false
+
+# vLLM Configuration (Custom deployment)
+vllm:
+  api_url: http://10.35.118.246:8000/v1/chat/completions
+  model: /models
+  temperature: 0.7
+  max_tokens: 2048
+  top_p: 1.0
+
+# Anthropic Configuration (Claude)
+anthropic:
+  api_key: ""  # Add your Anthropic API key
+  model: claude-3-5-sonnet-20241022
+  temperature: 0.7
   max_tokens: 2048
   top_p: 1.0
 

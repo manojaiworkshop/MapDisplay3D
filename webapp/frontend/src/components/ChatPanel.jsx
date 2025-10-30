@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BACKEND_URL } from '../config/constants';
+import LLMProviderSelector from './LLMProviderSelector';
 
 const ChatPanel = ({ onSend }) => {
   const [messages, setMessages] = useState([
@@ -80,8 +81,14 @@ const ChatPanel = ({ onSend }) => {
   return (
     <div className="flex flex-col h-full p-3 bg-white shadow-lg">
       <div className="mb-3 pb-3 border-b">
-        <h2 className="text-lg font-bold">�� Map Assistant</h2>
+        <h2 className="text-lg font-bold">🗨️ Map Assistant</h2>
       </div>
+      
+      {/* LLM Provider Selector */}
+      <div className="mb-3">
+        <LLMProviderSelector />
+      </div>
+      
       <div className="flex-1 overflow-y-auto mb-3 space-y-3">
         {messages.map((m, i) => (
           <div key={i} className={m.role === 'user' ? 'text-right' : 'text-left'}>
